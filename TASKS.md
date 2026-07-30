@@ -10,12 +10,12 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 
 - [x] **T-01** Setup do projeto (`package.json`, `tsconfig.json`, `.gitignore`, `prettier`, `eslint`, scripts npm)
 - [x] **T-02** `config.ts` carregando `.env` e validando com `zod`
-- [ ] **T-03** `logger.ts` com `pino` (pretty em dev, JSON em prod)
-- [ ] **T-04** `db/sqlite.ts` com init de schema e funções `isSeen`, `save`, `markNotified`
+- [x] **T-03** `logger.ts` com `pino` (pretty em dev, JSON em prod)
+- [x] **T-04** `db/sqlite.ts` com init de schema e funções `isSeen`, `save`, `markNotified`
 
 ## Fase 2 — Coleta
 
-- [ ] **T-05** `sources/rss.ts` com `fetchAll()` normalizado + lista em `feeds.ts`
+- [x] **T-05** `sources/rss.ts` com `fetchAll()` normalizado + lista em `feeds.ts`
 - [ ] **T-06** `sources/newsapi.ts`
 - [ ] **T-07** `sources/finnhub.ts`
 - [ ] **T-08** `sources/cvm.ts` (fatos relevantes)

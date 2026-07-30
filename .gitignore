@@ -28,6 +28,9 @@ npm-debug.log*
 # To-do working files
 .memory/
 
+# Local scratchpad (testes manuais, scripts descartáveis)
+scratchpad/
+
 # Misc
 opencode.json
 .ignore
