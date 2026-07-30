@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data
+data/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# To-do working files
+.memory/
+
+# Misc
+opencode.json
+.ignore
+
+# Harness (agent-starter-kit template — infra de desenvolvimento, não parte do projeto)
+personas/
+skills/
+rules/
+AGENTS.md
+README.md
