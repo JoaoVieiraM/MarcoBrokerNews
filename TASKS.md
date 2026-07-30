@@ -16,8 +16,8 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 ## Fase 2 — Coleta
 
 - [x] **T-05** `sources/rss.ts` com `fetchAll()` normalizado + lista em `feeds.ts`
-- [ ] **T-06** `sources/newsapi.ts`
-- [ ] **T-07** `sources/finnhub.ts`
+- [x] **T-06** `sources/newsapi.ts`
+- [x] **T-07** `sources/finnhub.ts`
 - [ ] **T-08** `sources/cvm.ts` (fatos relevantes)
 - [ ] **T-09** `sources/brasilapi.ts` (feriados + cache)
 - [ ] **T-10** `sources/bcb.ts` (Selic/IPCA/agenda Copom)
