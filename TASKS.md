@@ -22,12 +22,12 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 - [x] **T-09** `sources/brasilapi.ts` (feriados + cache)
 - [x] **T-10** `sources/bcb.ts` (Selic/IPCA/agenda Copom)
 - [x] **T-11** `sources/ibge.ts`
-- [ ] **T-12** `sources/alphavantage.ts` (usado sob demanda)
-- [ ] **T-13** `sources/massive.ts`
+- [x] **T-12** `sources/alphavantage.ts` (usado sob demanda)
+- [~] **T-13** `sources/massive.ts` — **SKIPPED**: Massive só cobre US/crypto/forex/futures, sem BR. Fora do escopo. Reavaliar se um dia expandir pra cobertura US.
 
 ## Fase 3 — Núcleo
 
-- [ ] **T-14** `core/dedup.ts` (hash + integração com SQLite)
+- [x] **T-14** `core/dedup.ts` (hash + integração com SQLite)
 - [ ] **T-15** `core/throttle.ts` (rate limit por fonte)
 - [ ] **T-16** `core/pregao.ts` (guard horário + feriados)
 - [ ] **T-17** `llm/mimo.ts` com prompt, batch, validação zod, retry+backoff
