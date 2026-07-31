@@ -20,8 +20,8 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 - [x] **T-07** `sources/finnhub.ts`
 - [x] **T-08** `sources/cvm.ts` (fatos relevantes)
 - [x] **T-09** `sources/brasilapi.ts` (feriados + cache)
-- [ ] **T-10** `sources/bcb.ts` (Selic/IPCA/agenda Copom)
-- [ ] **T-11** `sources/ibge.ts`
+- [x] **T-10** `sources/bcb.ts` (Selic/IPCA/agenda Copom)
+- [x] **T-11** `sources/ibge.ts`
 - [ ] **T-12** `sources/alphavantage.ts` (usado sob demanda)
 - [ ] **T-13** `sources/massive.ts`
 
