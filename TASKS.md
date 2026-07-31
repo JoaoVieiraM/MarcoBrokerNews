@@ -28,7 +28,7 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 ## Fase 3 — Núcleo
 
 - [x] **T-14** `core/dedup.ts` (hash + integração com SQLite)
-- [ ] **T-15** `core/throttle.ts` (rate limit por fonte)
+- [x] **T-15** `core/throttle.ts` (rate limit por fonte)
 - [ ] **T-16** `core/pregao.ts` (guard horário + feriados)
 - [ ] **T-17** `llm/mimo.ts` com prompt, batch, validação zod, retry+backoff
 
