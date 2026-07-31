@@ -58,6 +58,20 @@ const saveStmt = db.prepare(
 )
 const markNotifiedStmt = db.prepare('UPDATE news SET notified = 1 WHERE hash = ?')
 
+const upsertFeriadoStmt = db.prepare(
+  `INSERT OR REPLACE INTO feriados (data, nome, fetched_at)
+   VALUES (?, ?, CURRENT_TIMESTAMP)`,
+)
+const isDateFeriadoStmt = db.prepare('SELECT 1 FROM feriados WHERE data = ? LIMIT 1')
+
+export function upsertFeriado(row: { data: string; nome: string }): void {
+  upsertFeriadoStmt.run(row.data, row.nome)
+}
+
+export function isDateFeriado(dateYmd: string): boolean {
+  return isDateFeriadoStmt.get(dateYmd) !== undefined
+}
+
 export function isSeen(hash: string): boolean {
   return isSeenStmt.get(hash) !== undefined
 }
