@@ -42,7 +42,7 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 - [x] **T-20** `core/pipeline.ts` (fluxo notícias)
 - [x] **T-21** Pipeline separado pra CVM
 - [x] **T-22** Pipeline separado pra macro (diário)
-- [ ] **T-23** `index.ts` com `node-cron` e boot
+- [x] **T-23** `index.ts` com `node-cron` e boot
 
 ## Fase 6 — Operação
 
