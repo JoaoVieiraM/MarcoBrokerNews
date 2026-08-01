@@ -17,7 +17,6 @@ const NEWS_SOURCES: Record<string, () => Promise<NewsItem[]>> = {
   rss: rssSource.fetchAll,
   newsapi: newsapiSource.fetchAll,
   finnhub: finnhubSource.fetchAll,
-  cvm: cvmSource.fetchAll,
   bcb: bcbSource.fetchAll,
   ibge: ibgeSource.fetchAll,
 }
@@ -96,6 +95,21 @@ function persistFailed(failed: HashedItem[]): void {
   }
 }
 
+async function classifyAndPartition(items: NewsItem[]): Promise<{
+  classified: ClassifiedItem[]
+  failed: HashedItem[]
+}> {
+  const unseen = filterUnseen(items)
+  if (unseen.length === 0) return { classified: [], failed: [] }
+
+  const classified = await classifyBatch(unseen)
+  const failed = unseen.filter(
+    (hashed) => !classified.some((classified) => classified.hash === hashed.hash),
+  )
+
+  return { classified, failed }
+}
+
 export async function runNewsPipeline(): Promise<void> {
   try {
     if (!shouldRunPipeline()) {
@@ -106,16 +120,7 @@ export async function runNewsPipeline(): Promise<void> {
     const { allItems, bySource } = await fetchAllSources()
     logger.info({ total: allItems.length, bySource }, 'PipelineFetched')
 
-    const unseen = filterUnseen(allItems)
-    if (unseen.length === 0) {
-      logger.info('PipelineNothingNew')
-      return
-    }
-
-    const classified = await classifyBatch(unseen)
-    const failed = unseen.filter(
-      (hashed) => !classified.some((classified) => classified.hash === hashed.hash),
-    )
+    const { classified, failed } = await classifyAndPartition(allItems)
 
     if (classified.length === 0 && failed.length === 0) {
       logger.warn('PipelineNoClassifications')
@@ -128,7 +133,6 @@ export async function runNewsPipeline(): Promise<void> {
     logger.info(
       {
         fetched: allItems.length,
-        unseen: unseen.length,
         classified: classified.length,
         failed: failed.length,
         notified: notifiedCount,
@@ -138,5 +142,42 @@ export async function runNewsPipeline(): Promise<void> {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error)
     logger.warn({ error: message }, 'PipelineCrashed')
+  }
+}
+
+export async function runCvmPipeline(): Promise<void> {
+  try {
+    logger.info('CvmPipelineStarted')
+
+    const items = await cvmSource.fetchAll()
+    logger.info({ total: items.length }, 'CvmPipelineFetched')
+
+    if (items.length === 0) {
+      logger.info('CvmPipelineNoItems')
+      return
+    }
+
+    const { classified, failed } = await classifyAndPartition(items)
+
+    if (classified.length === 0 && failed.length === 0) {
+      logger.warn('CvmPipelineNoClassifications')
+      return
+    }
+
+    const { notifiedCount } = await persistClassified(classified)
+    persistFailed(failed)
+
+    logger.info(
+      {
+        fetched: items.length,
+        classified: classified.length,
+        failed: failed.length,
+        notified: notifiedCount,
+      },
+      'CvmPipelineFinished',
+    )
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+    logger.warn({ error: message }, 'CvmPipelineCrashed')
   }
 }
