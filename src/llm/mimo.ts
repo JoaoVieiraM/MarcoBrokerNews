@@ -9,13 +9,14 @@ const MIMO_BATCH_SIZE = 5
 const MIMO_TIMEOUT_MS = 30_000
 const MAX_ATTEMPTS = 3
 const BACKOFF_DELAYS_MS = [1000, 2000]
-const USER_AGENT = 'marcobroker/0.1 (+https://github.com/JoaoVieiraM/browsermarcobroker)'
+const USER_AGENT = 'marcobroker/0.1 (+https://github.com/JoaoVieiraM/MarcoBrokerNews)'
 
 const SYSTEM_PROMPT = [
   'Você é um analista do mercado financeiro brasileiro.',
   'Classifique cada notícia recebida quanto ao impacto potencial na B3 (Bolsa de São Paulo).',
   'Retorne APENAS um objeto JSON com a chave "resultados" contendo um array na mesma ordem das notícias enviadas.',
   "Cada resultado deve ter: impacto ('alto'|'medio'|'baixo'|'nenhum'), tickers_afetados (array de códigos como PETR4, VALE3), setores (array), direcao ('positivo'|'negativo'|'neutro'), resumo (1-2 frases em português).",
+  '`direcao` é o efeito esperado sobre o preço da ação ou setor citado no curto prazo (positivo = tende a subir, negativo = tende a cair, neutro = sem direção clara), não o efeito macroeconômico.',
   "Se a notícia não tem ligação com o mercado BR, use impacto 'nenhum'.",
 ].join('\n')
 

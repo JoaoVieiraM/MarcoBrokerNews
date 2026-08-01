@@ -30,12 +30,12 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 - [x] **T-14** `core/dedup.ts` (hash + integração com SQLite)
 - [x] **T-15** `core/throttle.ts` (rate limit por fonte)
 - [x] **T-16** `core/pregao.ts` (guard horário + feriados)
-- [ ] **T-17** `llm/mimo.ts` com prompt, batch, validação zod, retry+backoff
+- [x] **T-17** `llm/mimo.ts` com prompt, batch, validação zod, retry+backoff
 
 ## Fase 4 — Saída
 
-- [ ] **T-18** `notify/discord.ts` (embed)
-- [ ] **T-19** `notify/telegram.ts` (Markdown)
+- [x] **T-18** `notify/discord.ts` (embed)
+- [~] **T-19** `notify/telegram.ts` (Markdown) — **DEFERRED**: Discord basta pro MVP. Voltar depois da T-26 se quiser redundância ou canal alternativo (mobile push, etc.).
 
 ## Fase 5 — Orquestração
 
