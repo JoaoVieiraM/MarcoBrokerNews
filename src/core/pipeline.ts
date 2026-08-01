@@ -17,8 +17,6 @@ const NEWS_SOURCES: Record<string, () => Promise<NewsItem[]>> = {
   rss: rssSource.fetchAll,
   newsapi: newsapiSource.fetchAll,
   finnhub: finnhubSource.fetchAll,
-  bcb: bcbSource.fetchAll,
-  ibge: ibgeSource.fetchAll,
 }
 
 async function fetchAllSources(): Promise<{
@@ -179,5 +177,66 @@ export async function runCvmPipeline(): Promise<void> {
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error)
     logger.warn({ error: message }, 'CvmPipelineCrashed')
+  }
+}
+
+export async function runMacroPipeline(): Promise<void> {
+  try {
+    logger.info('MacroPipelineStarted')
+
+    const macroSources: [string, () => Promise<NewsItem[]>][] = [
+      ['bcb', bcbSource.fetchAll],
+      ['ibge', ibgeSource.fetchAll],
+    ]
+
+    const results = await Promise.allSettled(
+      macroSources.map(([sourceName, fetchFn]) => withRateLimit(sourceName, fetchFn)),
+    )
+
+    const allItems: NewsItem[] = []
+    const bySource: Record<string, number> = {}
+
+    for (const [index, result] of results.entries()) {
+      const sourceName = macroSources[index][0]
+      if (result.status === 'fulfilled') {
+        const items = result.value ?? []
+        bySource[sourceName] = items.length
+        allItems.push(...items)
+        continue
+      }
+      const error = result.reason instanceof Error ? result.reason.message : String(result.reason)
+      logger.warn({ source: sourceName, error }, 'MacroSourceFailed')
+      bySource[sourceName] = 0
+    }
+
+    logger.info({ total: allItems.length, bySource }, 'MacroPipelineFetched')
+
+    if (allItems.length === 0) {
+      logger.info('MacroPipelineNoItems')
+      return
+    }
+
+    const { classified, failed } = await classifyAndPartition(allItems)
+
+    if (classified.length === 0 && failed.length === 0) {
+      logger.warn('MacroPipelineNoClassifications')
+      return
+    }
+
+    const { notifiedCount } = await persistClassified(classified)
+    persistFailed(failed)
+
+    logger.info(
+      {
+        fetched: allItems.length,
+        classified: classified.length,
+        failed: failed.length,
+        notified: notifiedCount,
+      },
+      'MacroPipelineFinished',
+    )
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+    logger.warn({ error: message }, 'MacroPipelineCrashed')
   }
 }

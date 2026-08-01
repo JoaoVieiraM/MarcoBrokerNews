@@ -40,7 +40,7 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 ## Fase 5 — Orquestração
 
 - [x] **T-20** `core/pipeline.ts` (fluxo notícias)
-- [ ] **T-21** Pipeline separado pra CVM
+- [x] **T-21** Pipeline separado pra CVM
 - [ ] **T-22** Pipeline separado pra macro (diário)
 - [ ] **T-23** `index.ts` com `node-cron` e boot
 
