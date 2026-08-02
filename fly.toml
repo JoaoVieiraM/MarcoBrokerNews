@@ -1,10 +1,8 @@
-# fly.toml app configuration file generated for marcobrokernews on 2026-08-01T17:41:01Z
-#
+# fly.toml - marcobroker daemon (cron-driven, não é HTTP server)
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
 
 app = 'marcobrokernews'
-primary_region = 'iad'
+primary_region = 'gru'
 
 [build]
 
@@ -15,16 +13,6 @@ primary_region = 'iad'
   auto_extend_size_increment = '1GB'
   auto_extend_size_limit = '10GB'
 
-[http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = 'stop'
-  auto_start_machines = true
-  min_machines_running = 0
-  processes = ['app']
-
 [[vm]]
-  memory = '1gb'
-  cpu_kind = 'shared'
-  cpus = 1
-  memory_mb = 256
+  size = 'shared-cpu-1x'
+  memory = '256mb'
