@@ -5,6 +5,7 @@ import { type HashedItem, filterUnseen } from './dedup.js'
 import { shouldRunPipeline } from './pregao.js'
 import { withRateLimit } from './throttle.js'
 import { logger } from '../logger.js'
+import { config } from '../config.js'
 import * as rssSource from '../sources/rss.js'
 import * as newsapiSource from '../sources/newsapi.js'
 import * as finnhubSource from '../sources/finnhub.js'
@@ -93,16 +94,32 @@ function persistFailed(failed: HashedItem[]): void {
   }
 }
 
+function filterByAge(items: NewsItem[], maxAgeHours: number): NewsItem[] {
+  const cutoffMs = Date.now() - maxAgeHours * 3600_000
+  return items.filter((item) => {
+    const parsedMs = Date.parse(item.publishedAt)
+    if (Number.isNaN(parsedMs)) return true
+    return parsedMs >= cutoffMs
+  })
+}
+
 async function classifyAndPartition(items: NewsItem[]): Promise<{
   classified: ClassifiedItem[]
   failed: HashedItem[]
 }> {
-  const unseen = filterUnseen(items)
+  const recent = filterByAge(items, config.MAX_ITEM_AGE_HOURS)
+  if (recent.length < items.length) {
+    logger.info(
+      { input: items.length, keptRecent: recent.length, droppedOld: items.length - recent.length },
+      'PipelineAgeFiltered',
+    )
+  }
+  const unseen = filterUnseen(recent)
   if (unseen.length === 0) return { classified: [], failed: [] }
 
   const classified = await classifyBatch(unseen)
   const failed = unseen.filter(
-    (hashed) => !classified.some((classified) => classified.hash === hashed.hash),
+    (hashed) => !classified.some((classifiedItem) => classifiedItem.hash === hashed.hash),
   )
 
   return { classified, failed }

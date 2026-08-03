@@ -31,6 +31,7 @@ const envSchema = z.object({
   PREGAO_ONLY: booleanFromEnv.default(true),
   TIMEZONE: z.string().default('America/Sao_Paulo'),
   KEYWORD_PREFILTER: booleanFromEnv.default(true),
+  MAX_ITEM_AGE_HOURS: z.coerce.number().int().positive().default(24),
 
   DB_PATH: z.string().default('./data/news.db'),
 
