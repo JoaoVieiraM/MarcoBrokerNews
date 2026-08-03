@@ -46,6 +46,6 @@ Lista viva de tasks do projeto. **Fazer na ordem, uma por vez.** Nunca começar 
 
 ## Fase 6 — Operação
 
-- [ ] **T-24** Script `npm run once` (roda 1x sem cron pra debug)
-- [ ] **T-25** README com instruções de setup e deploy
-- [ ] **T-26** Deploy em Railway/Fly.io/VPS
+- [x] **T-24** Script `npm run once` (roda 1x sem cron pra debug)
+- [x] **T-25** README com instruções de setup e deploy
+- [x] **T-26** Deploy em Fly.io (região `gru`, machine `8d9777ced0de28`, volume `data` 1GB encriptado)
