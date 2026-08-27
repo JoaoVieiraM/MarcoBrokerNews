@@ -454,7 +454,7 @@ Discord + `flyctl logs` já resolvem "ver alertas" e "ver histórico". Dashboard
 Ideias consideradas mas **não implementadas** de propósito:
 
 - **Telegram notifier** — `notify/telegram.ts` planejado. Só faz sentido se quiser redundância além do Discord.
-- **Dashboard web** — página friendly pra non-tech user editar prompt e config. Análise concluiu que custo em complexidade supera ganho vs Discord + logs.
+- **Dashboard web** — página friendly pra non-tech user editar prompt e config. 
 - **Retention automática do SQLite** — só quando o arquivo passar de ~500MB.
 - **Enriquecimento on-demand com Alpha Vantage** — chamar `getQuote(ticker)` ao notificar impacto alto e anexar preço atual no embed.
 - **Fontes adicionais:** Twitter/X (breaking news de contas de analistas), Reddit BR-invest, YouTube canais financeiros. Seguir o mesmo pattern dos sources existentes (`fetchAll(): Promise<NewsItem[]>`).
