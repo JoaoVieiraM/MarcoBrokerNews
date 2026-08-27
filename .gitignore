@@ -43,3 +43,7 @@ AGENTS.md
 
 # Docs .md files (README fica trackeado no root)
 docs/*.md
+CHANGELOG.md
+ENTRYPOINT.md
+TASKS.md
+docinfoprojeto.md
