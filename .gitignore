@@ -40,3 +40,6 @@ personas/
 skills/
 rules/
 AGENTS.md
+
+# Docs .md files (README fica trackeado no root)
+docs/*.md
